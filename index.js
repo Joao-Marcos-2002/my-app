@@ -147,4 +147,5 @@ app.get('/delete', (req, res) => {
   )
 })
 
-app.listen(4001)
+
+app.listen(process.env.PORT || 4001)
