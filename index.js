@@ -147,5 +147,10 @@ app.get('/delete', (req, res) => {
   )
 })
 
-
+action.end(function(err) {
+  if (err) {
+    return console.log('Error:' + err.message);
+  }
+  console.log('Conexão com o banco encerrada.');
+});
 app.listen(process.env.PORT || 4001)
