@@ -146,6 +146,6 @@ app.get('/delete', (req, res) => {
     }
   )
 })
-
+setInterval(function () { db.query('SELECT 1'); }, 5000);
 
 app.listen(process.env.PORT || 4001)
