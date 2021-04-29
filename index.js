@@ -13,12 +13,12 @@ app.use(json())
 
 app.use(function (req, res, next) {
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
 
-    next();
+  next();
 });
 
 app.get('/create', (req, res) => {
@@ -42,6 +42,12 @@ app.get('/create', (req, res) => {
       })
     }
   )
+  action.end(function (err) {
+    if (err) {
+      return console.log('Error:' + err.message);
+    }
+    console.log('Conexão com o banco encerrada.');
+  });
 })
 
 
@@ -66,6 +72,12 @@ app.get('/add', (req, res) => {
       })
     }
   )
+  action.end(function (err) {
+    if (err) {
+      return console.log('Error:' + err.message);
+    }
+    console.log('Conexão com o banco encerrada.');
+  });
 })
 
 
@@ -83,13 +95,19 @@ app.get('/login', (req, res) => {
   })
   action.connect()
 
-  action.query(`select * from cliente where cpf = '${req.query.cpf}'` , (error, results, fields) => {
+  action.query(`select * from cliente where cpf = '${req.query.cpf}'`, (error, results, fields) => {
     console.log(results)
 
     console.log(`select * from cliente where cpf = '${req.query.cpf}'`)
     if (error) console.log(error)
     res.json(results)
   })
+  action.end(function (err) {
+    if (err) {
+      return console.log('Error:' + err.message);
+    }
+    console.log('Conexão com o banco encerrada.');
+  });
 })
 
 
@@ -108,7 +126,12 @@ app.get('/read', (req, res) => {
     if (error) console.log(error)
     res.json(results)
   })
-
+  action.end(function (err) {
+    if (err) {
+      return console.log('Error:' + err.message);
+    }
+    console.log('Conexão com o banco encerrada.');
+  });
 })
 
 app.get('/update', (req, res) => {
@@ -132,7 +155,14 @@ app.get('/update', (req, res) => {
       })
     }
   )
+  action.end(function (err) {
+    if (err) {
+      return console.log('Error:' + err.message);
+    }
+    console.log('Conexão com o banco encerrada.');
+  });
 })
+
 
 app.get('/delete', (req, res) => {
   // http://localhost:4001/delete?id=3
@@ -155,12 +185,12 @@ app.get('/delete', (req, res) => {
       })
     }
   )
+  action.end(function (err) {
+    if (err) {
+      return console.log('Error:' + err.message);
+    }
+    console.log('Conexão com o banco encerrada.');
+  });
 })
 
-action.end(function(err) {
-  if (err) {
-    return console.log('Error:' + err.message);
-  }
-  console.log('Conexão com o banco encerrada.');
-});
 app.listen(process.env.PORT || 4001)
