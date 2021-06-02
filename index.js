@@ -36,10 +36,14 @@ app.get('/create', (req, res) => {
   action.query(
     `insert into cliente (nome, cpf, endereco, telefone) values('${nome}', '${cpf}', '${endereco}', '${telefone}')`,
     (error, results, fields) => {
-      if (error) console.log(error)
+      if (error) { 
+        console.log(error)
+        res.status(200).json()
+      } else {
       res.json({
         msg: 'Criado',
       })
+    }
     }
   )
   action.end(function (err) {
@@ -66,10 +70,14 @@ app.get('/add', (req, res) => {
   action.query(
     `insert into cliente (nome, cpf, endereco, telefone) values('${nome}', '${cpf}', '${endereco}', '${telefone}')`,
     (error, results, fields) => {
-      if (error) console.log(error)
+      if (error) { 
+        console.log(error)
+        res.status(400).json()
+      } else {
       res.json({
         msg: 'Criado',
       })
+    }
     }
   )
   action.end(function (err) {
@@ -178,6 +186,35 @@ app.get('/delete', (req, res) => {
   action.connect()
   action.query(
     `delete from cliente where id = '${id}'`,
+    (error, results, fields) => {
+      if (error) console.log(error)
+      res.json({
+        msg: 'Deletado',
+      })
+    }
+  )
+  action.end(function (err) {
+    if (err) {
+      return console.log('Error:' + err.message);
+    }
+    console.log('Conexão com o banco encerrada.');
+  });
+})
+
+app.get('/apagar', (req, res) => {
+
+  console.log(req.query)
+  const { cpf } = req.query
+  const action = mysql.createConnection({
+    host: 'remotemysql.com',
+    port: 3306,
+    user: 'pGOTWZFbg9',
+    password: 'v0f3o3Gu62',
+    database: 'pGOTWZFbg9',
+  })
+  action.connect()
+  action.query(
+    `delete from cliente where cpf = '${cpf}'`,
     (error, results, fields) => {
       if (error) console.log(error)
       res.json({
